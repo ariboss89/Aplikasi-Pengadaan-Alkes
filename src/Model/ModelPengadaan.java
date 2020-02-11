@@ -12,6 +12,33 @@ package Model;
  */
 public class ModelPengadaan {
     private String IdDetail;
+    private int JumlahStok;
+    private int TotalStok;
+    private String Nama;
+
+    public String getNama() {
+        return Nama;
+    }
+
+    public void setNama(String Nama) {
+        this.Nama = Nama;
+    }
+
+    public int getTotalStok() {
+        return TotalStok;
+    }
+
+    public void setTotalStok(int TotalStok) {
+        this.TotalStok = TotalStok;
+    }
+    
+    public int getJumlahStok() {
+        return JumlahStok;
+    }
+
+    public void setJumlahStok(int JumlahStok) {
+        this.JumlahStok = JumlahStok;
+    }
     
     public String getIdDetail() {
         return IdDetail;

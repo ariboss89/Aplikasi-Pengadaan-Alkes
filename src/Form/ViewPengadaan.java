@@ -10,6 +10,7 @@ import Model.ModelPengadaan;
 import Model.ModelPengeluaran;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,11 +72,15 @@ public class ViewPengadaan extends javax.swing.JFrame {
         txtNamaBarang.setText("");
         txtJumlahBeli.setText("0");
         txtSearchNamaBarang.setText("");
+        jButton1.setEnabled(true);
+        txtNamaBarang.setEditable(true);
+        txtJumlahBeli.setEditable(true);
+        ViewData();
     }
 
     private void tanggal() {
         Date tgl = new Date();
-        SimpleDateFormat tglFormat = new SimpleDateFormat("yyyy-MM-DD");
+        SimpleDateFormat tglFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat blnFormat = new SimpleDateFormat("MMMM");
         SimpleDateFormat thnFormat = new SimpleDateFormat("yyyy");
         txtTanggal.setText(tglFormat.format(tgl));
@@ -86,7 +91,7 @@ public class ViewPengadaan extends javax.swing.JFrame {
         OrderTable = new DefaultTableModel();
         OrderTable.addColumn("Id Detail");
         OrderTable.addColumn("Id Pengadaan");
-        OrderTable.addColumn("Nama Pemesan");
+        OrderTable.addColumn("Nama Barang");
         OrderTable.addColumn("Jumlah");
 
         jTable3.setModel(OrderTable);
@@ -138,8 +143,8 @@ public class ViewPengadaan extends javax.swing.JFrame {
                 mdl.setIdDetail("DTL-0001");
             } else {
                 rs.first();
-                System.out.println("COT: " + rs.getString("iddetail").substring(7, 8));
-                int nokirim = Integer.valueOf(rs.getString("iddetail").substring(7, 8)) + 1;
+                System.out.println("COT: " + rs.getString("iddetail").substring(4, 8));
+                int nokirim = Integer.valueOf(rs.getString("iddetail").substring(4, 8)) + 1;
                 System.out.println(nokirim);
                 if (nokirim < 10) {
                     mdl.setIdDetail("DTL-000" + nokirim);
@@ -225,7 +230,49 @@ public class ViewPengadaan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private void HitungStok(){
+        int currenStok = mdl.getJumlahStok();
+        int tambah = Integer.parseInt(txtJumlahBeli.getText());
+        int total = currenStok+tambah;
+        mdl.setTotalStok(total);
+    }
+    
+    private void KurangStok(){
+        int currenStok = mdl.getJumlahStok();
+        int kurang = Integer.parseInt(txtJumlahBeli.getText());
+        int total = currenStok-kurang;
+        mdl.setTotalStok(total);
+    }
 
+    private void UpdateStok() {
+        java.sql.Connection conn = new Database().connect();
+        try {
+
+            java.sql.PreparedStatement stmt = conn.prepareStatement("update barang set jumlah=? where nama =? ");
+
+            try {
+                stmt.setDouble(1, mdl.getTotalStok());
+                stmt.setString(2, txtNamaBarang.getText());
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    private void GetJumlahStok() {
+        java.sql.Connection conn = new Koneksi.Database().connect();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet res = stmt.executeQuery("select *from barang where nama = '"+ txtNamaBarang.getText().trim()+"'");
+            while (res.next()) {
+                mdl.setJumlahStok(res.getInt("jumlah"));
+            }
+        } catch (SQLException ex) {
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -443,6 +490,11 @@ public class ViewPengadaan extends javax.swing.JFrame {
                 jTable3MouseClicked(evt);
             }
         });
+        jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable3KeyPressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTable3);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -628,6 +680,7 @@ public class ViewPengadaan extends javax.swing.JFrame {
         // TODO add your handling code here:
         int baris = jTable2.getSelectedRow();
         txtNamaBarang.setText(ItemTable.getValueAt(baris, 0).toString());
+        mdl.setJumlahStok(Integer.parseInt(ItemTable.getValueAt(baris, 1).toString()));
         txtJumlahBeli.requestFocus();
         txtJumlahBeli.setEnabled(true);
     }//GEN-LAST:event_jTable2MouseClicked
@@ -642,6 +695,14 @@ public class ViewPengadaan extends javax.swing.JFrame {
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
         // TODO add your handling code here:
+        int baris = jTable3.getSelectedRow();
+        txtNamaBarang.setText(OrderTable.getValueAt(baris, 2).toString());
+        txtJumlahBeli.setText(OrderTable.getValueAt(baris, 3).toString());
+        jButton1.setEnabled(false);
+        txtNamaBarang.setEditable(false);
+        txtJumlahBeli.setEditable(false);
+        mdl.setIdDetail(OrderTable.getValueAt(baris, 0).toString());
+        GetJumlahStok();
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void cbNamaPemesanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbNamaPemesanItemStateChanged
@@ -649,7 +710,7 @@ public class ViewPengadaan extends javax.swing.JFrame {
         java.sql.Connection conn = new Koneksi.Database().connect();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet res = stmt.executeQuery("select *from pelanggan where nama = '" + cbNamaPemesan.getSelectedItem() + "'");
+            java.sql.ResultSet res = stmt.executeQuery("select *from supplier where nama = '" + cbNamaPemesan.getSelectedItem() + "'");
             while (res.next()) {
                 txtAlamat.setText(res.getString("alamat"));
                 txtKontak.setText(res.getString("kontak"));
@@ -676,6 +737,7 @@ public class ViewPengadaan extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Double jml = Double.parseDouble(txtJumlahBeli.getText());
+        
         if (txtNamaBarang.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Silahkan Pilih Barang");
             txtSearchNamaBarang.requestFocus();
@@ -694,6 +756,8 @@ public class ViewPengadaan extends javax.swing.JFrame {
 
                     stmt.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Data Added", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+                    HitungStok();
+                    UpdateStok();
                     Refresh();
                     SumJumlah();
 
@@ -741,6 +805,32 @@ public class ViewPengadaan extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+        // TODO add your handling code here:
+        int current = mdl.getJumlahStok();
+        int total = mdl.getTotalStok();
+        
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            java.sql.Connection conn = new Database().connect();
+            int ok = JOptionPane.showConfirmDialog(null, "Are You Sure Want to Remove This Data?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (ok == 0 && total < current) {
+                try {
+                    SQL = "delete from detailpengadaan where iddetail ='" + mdl.getIdDetail() + "'";
+                    java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
+                    stmt.executeUpdate();
+                    KurangStok();
+                    UpdateStok();
+                    JOptionPane.showMessageDialog(null, "Data Removed");
+                    Refresh();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Data Failed to Removed ");
+                }
+            } else {
+                Refresh();
+            }
+        }
+    }//GEN-LAST:event_jTable3KeyPressed
 
     /**
      * @param args the command line arguments

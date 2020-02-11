@@ -78,7 +78,7 @@ public class ViewPengeluaran extends javax.swing.JFrame {
 
     private void tanggal() {
         Date tgl = new Date();
-        SimpleDateFormat tglFormat = new SimpleDateFormat("yyyy-MM-DD");
+        SimpleDateFormat tglFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat blnFormat = new SimpleDateFormat("MMMM");
         SimpleDateFormat thnFormat = new SimpleDateFormat("yyyy");
         txtTanggal.setText(tglFormat.format(tgl));
@@ -125,13 +125,13 @@ public class ViewPengeluaran extends javax.swing.JFrame {
         java.sql.Connection conn = new Database().connect();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            SQL = " select *from barang where nama like '%" + txtSearchNamaBarang.getText() + "%'";
+            SQL = " select *from barang where nama like '%" + txtSearchNamaBarang.getText() + "%' and jumlah != 0";
             java.sql.ResultSet res = stmt.executeQuery(SQL);
             while (res.next()) {
                 ItemTable.addRow(new Object[]{
                     res.getString("nama"),
                     res.getString("jumlah"),
-                    res.getString("harga")
+                    res.getString("hargajual")
                 });
             }
         } catch (Exception e) {
@@ -147,8 +147,8 @@ public class ViewPengeluaran extends javax.swing.JFrame {
                 mdl.setIdDetail("DTO-0001");
             } else {
                 rs.first();
-                System.out.println("COT: " + rs.getString("iddetail").substring(7, 8));
-                int nokirim = Integer.valueOf(rs.getString("iddetail").substring(7, 8)) + 1;
+                System.out.println("COT: " + rs.getString("iddetail").substring(4, 8));
+                int nokirim = Integer.valueOf(rs.getString("iddetail").substring(4, 8)) + 1;
                 System.out.println(nokirim);
                 if (nokirim < 10) {
                     mdl.setIdDetail("DTO-000" + nokirim);
