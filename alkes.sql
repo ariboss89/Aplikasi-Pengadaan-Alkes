@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.5.8)
-# Date: 2020-01-16 10:46:05
+# Date: 2020-02-12 23:06:42
 # Generator: MySQL-Front 5.3  (Build 4.81)
 
 /*!40101 SET NAMES utf8 */;
@@ -16,16 +16,18 @@ CREATE TABLE `barang` (
   `satuan` varchar(255) DEFAULT NULL,
   `jumlah` varchar(255) DEFAULT NULL,
   `harga` varchar(255) DEFAULT NULL,
+  `hargajual` varchar(255) DEFAULT NULL,
   `tggl` varchar(255) DEFAULT NULL,
+  `tglexpired` date DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 #
 # Data for table "barang"
 #
 
 /*!40000 ALTER TABLE `barang` DISABLE KEYS */;
-INSERT INTO `barang` VALUES (1,'STF-0001','Pispot','PCS','1.0','80000','04 October 2019'),(2,'STF-0002','Stetoskop','SET','1.0','200000','04 October 2019'),(3,'STF-0003','Pil','PCS','1892.0','1500','04 October 2019');
+INSERT INTO `barang` VALUES (1,'STF-0001','Pispot','PCS','110.0','80000','90000','04 October 2019','2020-02-11'),(2,'STF-0002','Stetoskop','SET','1.0','200000','210000','04 October 2019','2020-02-11'),(3,'STF-0003','Pil','PCS','1892.0','1500','2000','04 October 2019','2020-02-13'),(4,'STF-0004','Kucing Goreng','PCS','10','12000','20000','11 February 2020','2020-02-11');
 /*!40000 ALTER TABLE `barang` ENABLE KEYS */;
 
 #
@@ -45,7 +47,7 @@ CREATE TABLE `detailpengadaan` (
 # Data for table "detailpengadaan"
 #
 
-INSERT INTO `detailpengadaan` VALUES ('DTL-0001','TRC-0001','CV. Manise',10),('DTL-0002','TRC-0002','CV. Manise',30),('DTL-0003','TRC-0003','CV. Manise',3),('DTL-0004','TRC-0004','Pil',7);
+INSERT INTO `detailpengadaan` VALUES ('DTL-0001','TRC-0001','CV. Manise',10),('DTL-0002','TRC-0002','CV. Manise',30),('DTL-0003','TRC-0003','CV. Manise',3),('DTL-0004','TRC-0004','Pil',7),('DTL-0005','TRC-0005','Pispot',100),('DTL-0006','TRC-0005','Stetoskop',100),('DTL-0007','TRC-0006','Pispot',30);
 
 #
 # Structure for table "detailpengeluaran"
@@ -66,7 +68,7 @@ CREATE TABLE `detailpengeluaran` (
 # Data for table "detailpengeluaran"
 #
 
-INSERT INTO `detailpengeluaran` VALUES ('DTO-0001','OUT-0001','Pil',6,1500,13500),('DTO-0002','OUT-0002','Pil',8,1500,12000),('DTO-0003','OUT-0002','Pil',2,1500,3000),('DTO-0004','OUT-0003','Pil',7,1500,10500),('DTO-0005','OUT-0004','Pil',8,1500,12000),('DTO-0006','OUT-0005','Pil',5,1500,7500),('DTO-0007','OUT-0006','Pil',7,1500,10500),('DTO-0008','OUT-0007','Pil',4,1500,6000),('DTO-0009','OUT-0008','Pil',5,1500,7500);
+INSERT INTO `detailpengeluaran` VALUES ('DTO-0001','OUT-0001','Pil',6,1500,13500),('DTO-0002','OUT-0002','Pil',8,1500,12000),('DTO-0003','OUT-0002','Pil',2,1500,3000),('DTO-0004','OUT-0003','Pil',7,1500,10500),('DTO-0005','OUT-0004','Pil',8,1500,12000),('DTO-0006','OUT-0005','Pil',5,1500,7500),('DTO-0007','OUT-0006','Pil',7,1500,10500),('DTO-0008','OUT-0007','Pil',4,1500,6000),('DTO-0009','OUT-0008','Pil',5,1500,7500),('DTO-0010','OUT-0009','Pispot',1,80000,80000);
 
 #
 # Structure for table "detailpengembalian"
@@ -142,14 +144,14 @@ CREATE TABLE `supplier` (
   `kontak` varchar(255) DEFAULT NULL,
   `alamat` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 #
 # Data for table "supplier"
 #
 
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (1,'SPL-0001','CV. Manise','0771313256','Jl. D.I. Panjaitan Km 8');
+INSERT INTO `supplier` VALUES (1,'SPL-0001','CV. Manise','0771313256','Jl. D.I. Panjaitan Km 8'),(2,'SPL-0002','CV. BATU','081278654352','Jl. Manise');
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 
 #
@@ -169,7 +171,7 @@ CREATE TABLE `trpengadaan` (
 # Data for table "trpengadaan"
 #
 
-INSERT INTO `trpengadaan` VALUES ('TRC-0001','CV. Manise','2020-01-14',10),('TRC-0002','CV. Manise','2020-01-14',30),('TRC-0003','CV. Manise','2020-01-14',3),('TRC-0004','CV. Manise','2020-01-14',1);
+INSERT INTO `trpengadaan` VALUES ('TRC-0001','CV. Manise','2020-01-14',10),('TRC-0002','CV. Manise','2020-01-14',30),('TRC-0003','CV. Manise','2020-01-14',3),('TRC-0004','CV. Manise','2020-01-14',1),('TRC-0005','CV. BATU','2020-02-04',200),('TRC-0006','CV. Manise','2020-02-12',30);
 
 #
 # Structure for table "trpengeluaran"

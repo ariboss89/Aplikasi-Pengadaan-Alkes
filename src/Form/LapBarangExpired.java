@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Form;
 
 import Koneksi.Database;
@@ -27,29 +28,14 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author User
  */
-public class LapPengeluaran extends javax.swing.JFrame {
+public class LapBarangExpired extends javax.swing.JFrame {
 
     /**
      * Creates new form Laporan
      */
-    public LapPengeluaran() {
+    public LapBarangExpired() {
         initComponents();
         setLocationRelativeTo(this);
-        showNama();
-    }
-
-    public void showNama() {
-        java.sql.Connection conn = new Database().connect();
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select *from pelanggan");
-            while (rs.next()) {
-                cbNama.addItem(rs.getString("nama"));
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
     }
 
     /**
@@ -68,10 +54,6 @@ public class LapPengeluaran extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtKontak = new javax.swing.JTextField();
-        cbNama = new javax.swing.JComboBox();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
@@ -88,7 +70,7 @@ public class LapPengeluaran extends javax.swing.JFrame {
         jLabel2.setText("CV. MUARA PUTERA MANDIRI");
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Form Laporan Pengeluaran", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Form Laporan Expired", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -105,25 +87,6 @@ public class LapPengeluaran extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("TANGAL AKHIR");
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("NAMA");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("KONTAK");
-
-        txtKontak.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtKontak.setEnabled(false);
-
-        cbNama.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        cbNama.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SEMUA" }));
-        cbNama.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbNamaItemStateChanged(evt);
-            }
-        });
 
         jDateChooser1.setDateFormatString("yyyy-MM-dd");
 
@@ -142,29 +105,17 @@ public class LapPengeluaran extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtKontak)
-                            .addComponent(cbNama, 0, 137, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                             .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cbNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtKontak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,59 +182,23 @@ public class LapPengeluaran extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         java.sql.Connection conn = new Koneksi.Database().connect();
-        if (cbNama.getSelectedIndex() == 0) {
-            try {
-                HashMap parameter = new HashMap();
-                File file = new File("src/Report/LapKeluar.jasper");
-                SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-                Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
-                Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
-                parameter.put("awal", awal);
-                parameter.put("akhir", akhir);
-                JasperReport jp = (JasperReport) JRLoader.loadObject(file);
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
-                JasperViewer.viewReport(jasperPrint, false);
-                JasperViewer.setDefaultLookAndFeelDecorated(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-        } else {
-            try {
-                HashMap parameter = new HashMap();
-                File file = new File("src/Report/LapPengeluaran.jasper");
-                String nama = cbNama.getSelectedItem().toString().trim();
-                int kontak = Integer.parseInt(txtKontak.getText());
-                SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-                Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
-                Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
-                parameter.put("nama", nama);
-                parameter.put("kontak", kontak);
-                parameter.put("awal", awal);
-                parameter.put("akhir", akhir);
-                JasperReport jp = (JasperReport) JRLoader.loadObject(file);
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
-                JasperViewer.viewReport(jasperPrint, false);
-                JasperViewer.setDefaultLookAndFeelDecorated(true);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void cbNamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbNamaItemStateChanged
-        // TODO add your handling code here:
-        java.sql.Connection conn = new Database().connect();
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select *from pelanggan where nama = '" + cbNama.getSelectedItem() + "'");
-            while (rs.next()) {
-                txtKontak.setText(rs.getString("kontak"));
-            }
-
+            HashMap parameter = new HashMap();
+            File file = new File("src/Report/LapExpired.jasper");
+            SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+            Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
+            Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
+            parameter.put("awal", awal);
+            parameter.put("akhir", akhir);
+            JasperReport jp = (JasperReport) JRLoader.loadObject(file);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
+            JasperViewer.viewReport(jasperPrint, false);
+            JasperViewer.setDefaultLookAndFeelDecorated(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    }//GEN-LAST:event_cbNamaItemStateChanged
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
@@ -307,26 +222,25 @@ public class LapPengeluaran extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LapPengeluaran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LapBarangExpired.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LapPengeluaran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LapBarangExpired.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LapPengeluaran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LapBarangExpired.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LapPengeluaran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LapBarangExpired.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LapPengeluaran().setVisible(true);
+                new LapBarangExpired().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbNama;
     private Gambar.Gambar gambar1;
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -335,10 +249,7 @@ public class LapPengeluaran extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtKontak;
     // End of variables declaration//GEN-END:variables
 }

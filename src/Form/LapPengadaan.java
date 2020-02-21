@@ -118,6 +118,7 @@ public class LapPengadaan extends javax.swing.JFrame {
         txtKontak.setEnabled(false);
 
         cbNama.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbNama.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SEMUA" }));
         cbNama.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbNamaItemStateChanged(evt);
@@ -236,26 +237,43 @@ public class LapPengadaan extends javax.swing.JFrame {
         // TODO add your handling code here:
         java.sql.Connection conn = new Koneksi.Database().connect();
 
-        try {
-            HashMap parameter = new HashMap();
-            File file = new File("src/Report/LapPengadaan.jasper");
-            String nama = cbNama.getSelectedItem().toString().trim();
-            int kontak = Integer.parseInt(txtKontak.getText());
-            SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-            Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
-            Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
-            parameter.put("nama", nama);
-            parameter.put("kontak", kontak);
-            parameter.put("awal", awal);
-            parameter.put("akhir", akhir);
-            JasperReport jp = (JasperReport) JRLoader.loadObject(file);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
-            JasperViewer.viewReport(jasperPrint, false);
-            JasperViewer.setDefaultLookAndFeelDecorated(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        if (cbNama.getSelectedIndex() == 0) {
+            try {
+                HashMap parameter = new HashMap();
+                File file = new File("src/Report/LapMasuk.jasper");
+                SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+                Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
+                Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
+                parameter.put("awal", awal);
+                parameter.put("akhir", akhir);
+                JasperReport jp = (JasperReport) JRLoader.loadObject(file);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
+                JasperViewer.viewReport(jasperPrint, false);
+                JasperViewer.setDefaultLookAndFeelDecorated(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } else {
+            try {
+                HashMap parameter = new HashMap();
+                File file = new File("src/Report/LapPengadaan.jasper");
+                String nama = cbNama.getSelectedItem().toString().trim();
+                int kontak = Integer.parseInt(txtKontak.getText());
+                SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
+                Date awal = Date.valueOf(spf.format(jDateChooser1.getDate()));
+                Date akhir = Date.valueOf(spf.format(jDateChooser2.getDate()));
+                parameter.put("nama", nama);
+                parameter.put("kontak", kontak);
+                parameter.put("awal", awal);
+                parameter.put("akhir", akhir);
+                JasperReport jp = (JasperReport) JRLoader.loadObject(file);
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jp, parameter, conn);
+                JasperViewer.viewReport(jasperPrint, false);
+                JasperViewer.setDefaultLookAndFeelDecorated(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cbNamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbNamaItemStateChanged

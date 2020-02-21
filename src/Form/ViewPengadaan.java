@@ -814,7 +814,7 @@ public class ViewPengadaan extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             java.sql.Connection conn = new Database().connect();
             int ok = JOptionPane.showConfirmDialog(null, "Are You Sure Want to Remove This Data?", "Confirmation", JOptionPane.YES_NO_OPTION);
-            if (ok == 0 && total < current) {
+            if (ok == 0) {
                 try {
                     SQL = "delete from detailpengadaan where iddetail ='" + mdl.getIdDetail() + "'";
                     java.sql.PreparedStatement stmt = conn.prepareStatement(SQL);
